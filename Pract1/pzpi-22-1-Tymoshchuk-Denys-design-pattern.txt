@@ -1,0 +1,173 @@
+﻿Міністерство освіти і науки України
+Харківський національний університет радіоелектроніки
+Кафедра програмної інженерії
+ 
+ 
+ 
+ 
+
+
+ 
+Практична робота №1
+з дисципліни: «Архітектура програмного забезпечення»
+ 
+ 
+ 
+ 
+ 
+ 
+Виконав:
+ст. гр. ПЗПІ-22-1
+Тимощук Денис	Перевірив:
+доцент кафедри програмної інженерії,
+Лещинський Володимир Олександрович
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+Харків 2025
+Мета:
+Розібрати паттерн Facade (Фосад) та його застосування. 
+Завдання на практичне заняття 1 (ПЗ1):
+    1. Підготувати доповідь на тему: «Шаблон (патерн) проєктування ПЗ»
+(із книг: Ґамма, “ООП. Патерни проєктування”, GoF, крім патерна Singletone)
+    2. Створити та оформити слайди презентації доповіді
+    3. Створити та опублікувати на YouTube відеозапис доповіді
+    4. Оформити та завантажити на dl.nure.ua звіт до виконаної роботи
+    5. При потребі створити та налаштувати у GitHub обліковий запис для облікового запису студента в домені @nure.ua
+    6. Створити GitHub репозиторій з вказаним далі іменем для виконання завдань з дисципліни
+    7. Створити у корені створеного репозиторію файл README.md з вказаним далі змістом та вказані далі директорії для окремих завдань
+    8. Експортувати звіт у файл у простому текстововому форматі та завантажити цей файл у директорію Pract1 у репозиторії GitHub
+    9. Завантажити у вказану далі піддиректорію увесь програмний код, який розглядається у доповіді ПЗ1
+Висновки: 
+	Під час роботи було розібрано патерн Facade (Фасад), який є структурним патерном проектування і надає простий інтерфейс до складної системи, бібліотеки або фреймворку, приховуючи їхню внутрішню складність. Усі приклади наведені на мові програмування C#.
+
+
+
+
+
+
+
+
+
+
+Додаток А
+
+Відеозапис доповіді на YouTube: 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Додаток Б
+
+Рисунок Б.1 – Титульний слайд презентації
+Рисунок Б.2 – Розбір що з себе являє патерн Facade
+Рисунок Б.3 – Випадки застосування
+Рисунок Б.4 – Структура
+
+Рисунок Б.5 – Учасники
+Рисунок Б.6 – Схема використання
+
+Рисунок Б.7 – Переваги та недоліки
+Рисунок Б.8 – Приклад використання
+
+Рисунок Б.9 – Приклад інформації що бажано отримати
+Рисунок Б. 10– Приклад написання патерну
+Рисунок Б. 11– Завершаючий слайд
+
+
+
+
+
+
+
+
+
+
+
+
+Додаток В
+    1  class Bank
+    2 {
+    3 public bool Verify(int amount)
+    4 {
+    5 return amount < 999;
+    6 }
+    7 }
+    8 
+    9 class CreditHistory
+    10 {
+    11 public bool Check(string name)
+    12 {
+    13 return true; 
+    14 }
+    15 }
+    16 
+    17 class Balance
+    18 {
+    19 public bool Check(string name)
+    20 {
+    21 return true; 
+    22 }
+    23 }
+    24 class Credit
+    25 {
+    26 private string name;
+    27 public Credit(string name)
+    28 {
+    29 this.name = name;
+    30 }
+    31 
+    32 public string ApplyFor(int amount)
+    33 {
+    34 var isApproved = new Bank().Verify(amount);
+    35 var bankResult = isApproved ? "approved" : "denied";
+    36 
+    37 var isPositiveBalance = new Balance().Check(this.name);
+    38 var balance = isPositiveBalance ? "positive balance" : "negative balance";
+    39 var isGoodCreditHistory = new CreditHistory().Check(this.name);
+    40 var creditHistory = isGoodCreditHistory ? "good" : "poor";
+    41 return $"{this.name} has been {bankResult} for the {amount} credit. With a {creditHistory} credit 
+    42 standing and having a {balance}.";
+    43 }
+    44 }
+    45 class Program
+    46 {
+    47 static void Main(string[] args)
+    48 {
+    49 var credit = new Credit("John");
+    50 var creditSmall = credit.ApplyFor(99);
+    51 var creditMedium = credit.ApplyFor(199);
+    52 var creditLarge = credit.ApplyFor(99999);
+    53 Console.WriteLine($"creditSmall: {creditSmall}");
+    54 Console.WriteLine($"creditMedium: {creditMedium}");
+    55 Console.WriteLine($"creditLarge: {creditLarge}");
+    56 }
+    57 }
+
+
